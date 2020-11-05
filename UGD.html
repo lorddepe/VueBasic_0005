@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UGD</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <div class="d-flex justify-content-center">
+            <div class="card border-primary my-5">
+                <div class="card-header">Tebak Angka</div>
+                <div class="card-body text-primary">
+                    <input type="number" class="form-control" v-model="tebakan" :disabled="false" placeholder="Tebak Angka"/>
+                    <br>
+                    <button class="btn btn-primary btn-sm" @click="tebak" :disabled="false">Tebak</button>
+                    <br>
+                    Kesempatan : {{ kesempatan }}
+                </div>
+            </div>
+        </div>
+        <div class="text-center" v-show="benar">
+            <p>Mantap Betul !!</p> 
+            <button class="btn btn-primary" @click="mainlagi" >Main Lagi</button>
+        </div>
+        <div class="text-center" v-show="kalah">
+            <p>Kamu Kalah !! AOWKOAKWOKAOWKOAKWOAK </p> 
+            <button class="btn btn-primary" @click="mainlagi" >Main Lagi</button>
+        </div>
+        <div class="text-center" v-show="salah">
+            <p>COBA LAGI :(</p> 
+            <button class="btn btn-warning" @click="cobalagi" >Coba lagi</button>
+        </div>
+        <footer class="text-center mt-5">
+            {{ `${mahasiswa.nama} | ${mahasiswa.npm} | ${mahasiswa.kelas}` }}
+        </footer>
+    </div>
+</body>
+
+<script>
+    new Vue({
+        el: "#app",
+        data: {
+            angka: Math.floor(Math.random() * 10)+1,
+            tebakan:0,
+            kesempatan:3,
+            salah:undefined,
+            benar:undefined,
+            kalah:undefined,
+            false:false,
+            mahasiswa: {
+                nama:'David Dharma Putra',
+                npm: '18010005',
+                kelas: 'E',
+            },
+        },
+        methods: {
+           tebak(){
+            console.log(this.angka);
+            if(this.tebakan == this.angka){
+                this.benar = 1;
+            }else {
+                    this.salah =1;
+                    this.false = true;
+                    this.kesempatan--;
+                    if(this.kesempatan==0){
+                        this.kalah=1;
+                        this.salah = undefined;
+                    }
+            }  
+           },
+           cobalagi(){
+                this.false = false;
+                this.salah = undefined;
+           },
+           mainlagi(){
+               location.reload();
+           }
+        },
+
+    });
+</script>
+</html>
